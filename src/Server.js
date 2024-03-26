@@ -5,8 +5,11 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const env = require("dotenv");
 const app = express();
+const cors = require("cors");
+
 env.config();
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(cors());
 
 mongoose.connect("mongodb://127.0.0.1:27017/RentelServices").
 then(()=> console.log("db connected...............")).
@@ -19,7 +22,15 @@ let Rentel = new mongoose.Schema({
 
 });
 
+const rentelItem = new mongoose.Schema({
+    name:String,
+    price:Number,
+    des:String,
+    url:String
+});
+
 let RentelServices = mongoose.model("rentel", Rentel); 
+const rentelItems = mongoose.model("rentelItems", rentelItem);
 
 app.get("/" , (req, res) =>{
     res.send("Hello Wrold server is working");
@@ -59,8 +70,27 @@ app.post("/login", async (req, res) =>{
    }catch(err){
     console.log(err);
    }
+})
 
+app.post('/additem',  async(req, res) =>{
+    const name =req.body.name;
+    const parice =req.body.price;
+    const des =req.body.des;
+    const url =req.body.url;
+   let item1 = new rentelItems({
+    name:name,
+    price:parice,
+    des:des,
+    url:url
+   });
+    await item1.save()
+    res.status(200)
+    res.redirect("http://localhost:3000/add-item");
+})
 
+app.get('/userItems' , async(req, res) =>{
+    const allData = await rentelItems.find();
+    res.send(allData);
 })
 
 app.listen(5000 , () =>{

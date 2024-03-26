@@ -2,10 +2,6 @@ import React from 'react'
 import { useState, createContext } from 'react';
 
  function Login() {
-
-   const myContext =  createContext();
-
-
     const[toggle, setToggle] = useState(false);
     function handleSign(){
         setToggle(true);
