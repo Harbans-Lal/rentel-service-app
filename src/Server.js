@@ -51,7 +51,7 @@ app.post("/sign",  (req, res) =>{
     user1.save().then(() => console.log("data save succesffully....")).
     catch(()=> console.log("data not save..."));
 
-    res.redirect("http://localhost:3000/");
+    res.redirect("http://localhost:3000/login");
 })
 
 app.post("/login", async (req, res) =>{
@@ -65,7 +65,10 @@ app.post("/login", async (req, res) =>{
  
     let token = jwt.sign({id:{id}}, process.env.SECRET_key , {expiresIn:"60s"});
     res.cookie('token', token);
-    res.redirect("http://localhost:3000/");
+
+    if(usr.length>0 || token){
+        res.redirect("http://localhost:3000/Home");
+    }
 
    }catch(err){
     console.log(err);

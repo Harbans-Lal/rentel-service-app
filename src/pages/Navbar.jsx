@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { myContext } from '../App';
 import Example from './ShopigCart';
 import Card from './Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Home = () => {
 
@@ -15,10 +16,11 @@ const Home = () => {
                 <h1 className='font-bold text-xl text-white'> Rentel</h1>
             </header>
             <div className='flex gap-6'>
-                <Link className='font-bold text-l text-white' to='/'> Home</Link>
+                <Link className='font-bold text-l text-white' to='/Home'> Home</Link>
                 <Link className='font-bold text-l text-white' to='#'> Feed</Link>
                 <Link className='font-bold text-l text-white' to='#'> notification</Link>
                 <Link className='font-bold text-l text-white' to='/add-item'> Add item</Link>
+                <Link className='font-bold text-l text-white' to='/cart'> Cart</Link>
                 <Link  className='font-bold text-l text-white'to='/login' > Login</Link>
                 
             </div>
