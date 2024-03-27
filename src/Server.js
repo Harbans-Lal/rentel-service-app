@@ -3,12 +3,13 @@ const bodyParser = require("body-parser");
 const cookie = require("cookie-parser");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const env = require("dotenv");
+const envvironment=require("dotenv")
 const app = express();
 const cors = require("cors");
 
-env.config();
+envvironment.config({path:'src/.env'});
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 app.use(cors());
 
 mongoose.connect("mongodb://127.0.0.1:27017/RentelServices").
@@ -63,13 +64,11 @@ app.post("/login", async (req, res) =>{
     let usr = await RentelServices.find({username:username, password:passwd});
     let id = (usr[0]._id);
  
-    let token = jwt.sign({id:{id}}, process.env.SECRET_key , {expiresIn:"60s"});
+    let token = jwt.sign({id:{id}}, process.env.SECRET, {expiresIn:"60s"});
     res.cookie('token', token);
-
-    if(usr.length>0 || token){
+    if(token ){
         res.redirect("http://localhost:3000/Home");
     }
-
    }catch(err){
     console.log(err);
    }
@@ -95,7 +94,11 @@ app.get('/userItems' , async(req, res) =>{
     const allData = await rentelItems.find();
     res.send(allData);
 })
-
+app.post('/addCart', async (req, res)=>{
+    const id = req.body.id;
+    const data = await rentelItems.findById(id);
+    res.send(data);
+})
 app.listen(5000 , () =>{
     console.log("port is listing on 5000...........");
 })

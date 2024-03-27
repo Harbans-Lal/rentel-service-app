@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import Navbar from './pages/Navbar';
 import Home from './pages/Home';
 import AddItem from './pages/AddItem';
-import { createContext, useState } from 'react';
 import { BrowserRouter,Route, Routes } from 'react-router-dom';
 function App() {
   return (
@@ -13,11 +12,10 @@ function App() {
       <BrowserRouter> 
         <Navbar />
         <Routes>
-          <Route path='/' element={<Login/>} ></Route>
+          <Route path='/' element={<Home/>} ></Route>
           <Route path='/Home' element={<Home/>} ></Route>
           <Route path='/login' element={<Login/>} ></Route>
           <Route path='/signUP' element={<Login/>} ></Route>
-          {/* <Route path='/login' element={<Login/>} ></Route> */}
           <Route path='/add-item' element={<AddItem/>} ></Route>
 
         </Routes>

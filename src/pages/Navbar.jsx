@@ -1,11 +1,15 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
-import { myContext } from '../App';
+import { myContext } from './Context';
 import Example from './ShopigCart';
 import Card from './Card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import UserContext from './Home';
+
+
 
 const Home = () => {
+// const myCookie = useContext(myContext);
 
   return (
     <div>
