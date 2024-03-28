@@ -1,15 +1,11 @@
 import React from 'react'
-import { createContext } from 'react';
-import Cookies from 'js-cookie';
-
-
-const myCookie = Cookies.get('token');
+import { createContext,useState } from 'react';
 
 export const myContext = createContext();
 function Context({children}) {
-
+const [count, setCount] = useState(0);
   return (
-    <myContext.Provider value={myCookie}> 
+    <myContext.Provider value={{count,setCount}}> 
     {children}
     </myContext.Provider>
   )

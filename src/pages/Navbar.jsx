@@ -1,23 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { myContext } from './Context';
-import Example from './ShopigCart';
-import Card from './Card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import UserContext from './Home';
-
-
 
 const Home = () => {
-// const myCookie = useContext(myContext);
-const [count, setcount] = useState(0);
+const {count, setCount} = useContext(myContext);
 useEffect(()=>{
+  console.log("i am clicked by harbans")
   fetch("http://localhost:5000/getCartDAta")
   .then(res => res.json())
   .then(data => {
-    setcount(data.length);
+    setCount(data.length);
   });
-},[]);
+},[count]);
 
   return (
     <div>
@@ -43,3 +37,6 @@ useEffect(()=>{
   )
 }
 export default Home;
+
+
+

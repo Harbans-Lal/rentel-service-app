@@ -7,6 +7,7 @@ function Card(props) {
     const id  = e.target.id;
     const dummy={
      id:id
+    
     }
 
     fetch("http://localhost:5000/addCart",{
@@ -49,3 +50,4 @@ function Card(props) {
 }
 
 export default Card;
+
