@@ -5,6 +5,7 @@ import Navbar from './pages/Navbar';
 import Home from './pages/Home';
 import AddItem from './pages/AddItem';
 import { BrowserRouter,Route, Routes } from 'react-router-dom';
+import CartItem from './pages/CartItem';
 function App() {
   return (
     <> 
@@ -17,6 +18,7 @@ function App() {
           <Route path='/login' element={<Login/>} ></Route>
           <Route path='/signUP' element={<Login/>} ></Route>
           <Route path='/add-item' element={<AddItem/>} ></Route>
+          <Route path='/cart' element={<CartItem/>} ></Route>
 
         </Routes>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { myContext } from './Context';
 import Example from './ShopigCart';
@@ -10,6 +10,14 @@ import UserContext from './Home';
 
 const Home = () => {
 // const myCookie = useContext(myContext);
+const [count, setcount] = useState(0);
+useEffect(()=>{
+  fetch("http://localhost:5000/getCartDAta")
+  .then(res => res.json())
+  .then(data => {
+    setcount(data.length);
+  });
+},[]);
 
   return (
     <div>
@@ -24,7 +32,7 @@ const Home = () => {
                 <Link className='font-bold text-l text-white' to='#'> Feed</Link>
                 <Link className='font-bold text-l text-white' to='#'> notification</Link>
                 <Link className='font-bold text-l text-white' to='/add-item'> Add item</Link>
-                <Link className='font-bold text-l text-white' to='/cart'> Cart</Link>
+                <Link className='font-bold text-l text-white' to='/cart'> Cart<sup className='text-xl'>{count}</sup></Link>
                 <Link  className='font-bold text-l text-white'to='/login' > Login</Link>
                 
             </div>

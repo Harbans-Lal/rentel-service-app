@@ -1,6 +1,8 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 function Card(props) {
+   const path = useNavigate()
+   
   function handleClick(e){
     const id  = e.target.id;
     const dummy={
@@ -12,7 +14,20 @@ function Card(props) {
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(dummy)
     })
-    .then(resp=> resp.json()).then((dar)=> console.log(dar))
+    .then(resp=> resp.json()).then((data)=> {
+      fetch("http://localhost:5000/cartItem",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
+      }).then(res => {
+        if(res.status==201){
+          path('/Home')
+
+        }
+        return res.json()})
+        .then((data)=>console.log(data))
+        .catch(err => console.log(err))
+    })
     .catch(err=>console.log(err))
 
   }
@@ -25,7 +40,7 @@ function Card(props) {
       </p>
       <div className="flex justify-between">
         <p className="font-bold">{props.price}</p>
-        <button id={props.id} onClick={handleClick} className="bg-black text-white p-2" type="submit ">
+        <button   id={props.id} onClick={handleClick} className="bg-black text-white p-2" type="submit ">
           Rent Now
         </button>
       </div>
