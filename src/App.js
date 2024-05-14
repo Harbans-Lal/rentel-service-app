@@ -1,32 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
-import Login from './pages/Login';
-import Navbar from './pages/Navbar';
-import Home from './pages/Home';
-import AddItem from './pages/AddItem';
-import { BrowserRouter,Route, Routes } from 'react-router-dom';
-import CartItem from './pages/CartItem';
+import "./App.css";
+import Navbar from "./Components/Navbar";
+import Login from "./Components/Login";
+import Home from "./Components/HomePage/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ListItem from "./Components/ListItem";
+import SignUP from "./Components/SignUp";
+import AboutPage from "./Components/About";
+import PageNotFound from "./Components/PageNotFound";
+import CartContaner from "./Components/Cart/CartContaner";
+import UpdateProduct from "./Components/UpdateProduct"; 
+
+
 function App() {
   return (
-    <> 
-      <div className='flex flex-col items-center'>
-      <BrowserRouter> 
-        <Navbar />
+    <div className="flex flex-col w-full min-h-[100vh]  items-center bg-black text-gray-400 ">
+      <BrowserRouter>
+        <Navbar/>
         <Routes>
-          <Route path='/' element={<Home/>} ></Route>
-          <Route path='/Home' element={<Home/>} ></Route>
-          <Route path='/login' element={<Login/>} ></Route>
-          <Route path='/signUP' element={<Login/>} ></Route>
-          <Route path='/add-item' element={<AddItem/>} ></Route>
-          <Route path='/cart' element={<CartItem/>} ></Route>
-
+          <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUP />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/createList" element={<ListItem />} />
+          <Route path="/cart" element={<CartContaner/>}/>
+          <Route path="/updateProduct/:id" element={<UpdateProduct/>}/>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-  
-      </div>
-
-    </>
-   
+        
+    </div>
   );
 }
+
 export default App;

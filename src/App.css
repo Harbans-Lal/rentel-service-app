@@ -1,39 +1,66 @@
-.App {
-  text-align: center;
+*{
+  margin:0px;
+  padding:0px;
+  box-sizing: border-box;
+}
+input{
+  width: 80%;
+  margin: 5px;
+  padding: 1%;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+nav a{
+  width: 5vw;
+  margin: 0vw 2vw 0vw -17vw;
+}
+#rentBtn{
+  border-radius: 2px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#rentBtn:hover{
+background-color: azure;
+color: black;
+transition: all ease-in-out 0.5s;
+border-radius: 5px;
+box-shadow: -1px -1px 1px white;
 }
 
+.navBar a{
+  width: auto;
+  height: fit-content;
+}
+svg{
+  font-size: 1.5rem;
+}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.updateConatner label{
+  width:79%;
+  margin-bottom:1px
+}
+
+/* @media (max-width:600px){
+  .updateConatner{
+    width:90%;
+    margin-top:15%;
+    padding:10px
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .updateConatner textarea,
+  .updateConatner input {
+    width:100%;
+    margin-bottom:1px
   }
-  to {
-    transform: rotate(360deg);
+
+  .updateConatner label {
+    width:100%;
+    margin-top: 1%;
+    margin-bottom:1%;
   }
-}
+
+  .navBar{
+    display: none;
+  }
+  .cart{
+    display: block;
+  }
+} */
