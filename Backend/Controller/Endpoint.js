@@ -79,8 +79,11 @@ module.exports.deleteCart= async (req, res) => {
   try {
       const userId = req.body.userId;
       const productId = req.body.productId;
-      let updated=await userDetail.findByIdAndUpdate(userId, { $pull: { cart: productId}},{new:true}).populate("cart");
-      res.status(200).send(updated.cart);
+      let user = await userDetail.findById(userId)
+      let updated = user.cart.filter((item)=>item.prodId +"" !== productId);
+      console.log(updated)
+        await userDetail.findByIdAndUpdate(userId, {$set:{cart:updated}})
+      res.status(200).send(updated);
   } catch (error) {
       console.error("Error deleting item from cart:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -92,17 +95,20 @@ module.exports.addToCart = async (req, res) => {
       const userId = req.body.userId;
       const productId = req.body.productId;
 
-      const updatedUser = await userDetail.findByIdAndUpdate(
-          userId,
-          { $addToSet: { cart: productId } },
-          { new: true }
-      );
-     
-      if (updatedUser) {
-          res.status(200).json(updatedUser.cart.length);
-      } else {
-          res.status(500).send("Cannot add to cart");
+      const user = await userDetail.findById(userId);
+
+      const findProduct = user.cart.findIndex((item)=> item.prodId + "" === productId);
+   
+      if(findProduct < 0){
+        user.cart.push({prodId:productId, qnt:1})   
       }
+      const updatedUser = await user.save();
+      if(updatedUser){
+        res.status(200).json(updatedUser.cart.length)
+      } else{
+        res.status(404).send({status:"data already exitst"})
+      }
+
   } catch (error) {
       console.error(error);
       res.status(500).send("Internal Server Error");
@@ -111,7 +117,7 @@ module.exports.addToCart = async (req, res) => {
 
 module.exports.singleUser=async(req,res)=>{
   try{
-    const data = await userDetail.findById(req.body.id).populate("cart")
+    const data = await userDetail.findById(req.body.id).populate("cart.prodId")
     if(data){
      res.status(200).send({data})
     }else{
@@ -127,4 +133,20 @@ module.exports.getItemById=async(req,res)=>{
   res.status(200).send(data)}catch(err){
    res.send(err)
   }
+  }
+
+  module.exports.incAndDecItem = async(req,res)=>{
+    let {userId, prodId, qnt} = req.body;
+    console.log(prodId)
+    const user = await userDetail.findById(userId);
+    console.log(user.cart[3]._id)
+    const productIndex = user.cart.findIndex((item) => item._id+"" === prodId);
+    console.log(productIndex)
+    if(productIndex !== -1){
+       user.cart[productIndex].qnt = qnt;
+       await user.save();
+       res.status(200).json({status:"succesfulllu updated qnuantity"})
+    }else{
+      res.status(404).json({status:"Opps! data not updated"})
+    }
   }

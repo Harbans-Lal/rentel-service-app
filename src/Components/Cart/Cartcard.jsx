@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-export default function Cartcard({product, handleClick}) {
-    console.log(product.quantity)
-    const [add, setAdd] = useState(1);
+export default function Cartcard({product, handleClick ,setTotal}) {
+  console.log(product , "hhfhfhfhhfhf")
+    const [add, setAdd] = useState(+product.qnt);
     const [available,setAvailable]= useState(true)
-    console.log("rerendered")
-    function increment(){ 
 
+    const obj = {
+      userId:JSON.parse(localStorage.getItem("token")),
+      prodId:product._id,
+      qnt:add
+    }
+    function increment(){ 
+      
         if(add>=product.quantity)
         {
           setAvailable(false)
@@ -17,8 +22,20 @@ export default function Cartcard({product, handleClick}) {
          
         }else{
           setAdd(prev => prev+1)
-        } 
+          setTotal(prev => prev + product.prodId.charges  );
+          obj.qnt = add + 1;
+          fetch("http://localhost:8000/incAndDecItem", {
+            "method":"PATCH",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(obj)
+          }).then(res  => {
+            return res.json()
+          })
+          .then(result => console.log(result))
+          .catch(err => console.log(err)) 
+        
       }
+    }
       function decrement(){
         if(add>=1){
           setAvailable(true)
@@ -28,26 +45,35 @@ export default function Cartcard({product, handleClick}) {
           setAdd(1);
         }else{
           setAdd(prev => prev -1)
+          obj.qnt = add -1;
+          setTotal(prev => prev - product.prodId.charges  );
+          fetch("http://localhost:8000/incAndDecItem", {
+            "method":"PATCH",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(obj)
+          }).then(res  => {
+            return res.json()
+          })
+          .then(result => console.log(result))
+          .catch(err => console.log(err)) 
         }
-        
       }
     
-   
     
   return (
     <div className="w-[100%] h-36 flex border-white border-[0.5px] mb-2 rounded-md bg-neutral-800 text-white p-1">
       <div className="w-[30%]  border-[1px] border-white ">
-        <img className="h-full w-full p-2 bg-black" src={product.link} alt="" />
+        <img className="h-full w-full p-2 bg-black" src={product.prodId.link} alt="" />
       </div>
       <div className="w-full">
         <p className="flex justify-between w-[100%] p-2">
-          <span>{product.product}</span>
-          <span>{product.charges * add} $</span>
+          <span>{product.prodId.product}</span>
+          <span>{product.prodId.charges * add} $</span>
         </p>
         <p className="flex justify-between w-[100%] p-2">
           <span className="text-green-300">{available?"InStock":"OutOfStock"}</span>
           <button
-          onClick={()=>handleClick(product._id)}
+          onClick={()=>handleClick(product.prodId._id)}
             className="text-white border-white border-[0.5px] p-1 rounded-s transition-all cursor-pointer"
           >
             {" "}

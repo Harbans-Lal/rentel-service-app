@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     name:String,
     email:String,
     password:String,
-    cart:[{type: mongoose.Types.ObjectId ,ref:"items"}]
+    cart:[{prodId:{type: mongoose.Types.ObjectId ,ref:"items" }, qnt:String}]
 })
 
 const itemSchema = new mongoose.Schema({

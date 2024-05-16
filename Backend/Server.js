@@ -35,6 +35,8 @@ app.post("/singleUser",endpoint.singleUser)
 
 app.delete("/deleteCart",endpoint.deleteCart)
 
+app.patch("/incAndDecItem", endpoint.incAndDecItem);
+
 app.post("/order", async(req, res)=>{
     try{
         const razorpay = new Razorpay({

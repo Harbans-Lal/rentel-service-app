@@ -14,7 +14,7 @@ const CartContaner = () => {
   const [order, setOrder] = useState(false);
   const [res, setRes] = useState([]);
   const navigate = useNavigate();
-
+  console.log(checkList , "hjfhdkjshfjh")
   useEffect(() => {
     const id = JSON.parse(localStorage.getItem("token"));
     const data = { id: id };
@@ -36,7 +36,7 @@ const CartContaner = () => {
   const calculateTotal = () => {
     let sum = 0;
     checkList.forEach((item) => {
-      sum += item.charges;
+      sum += item.prodId.charges;
     });
     return sum;
   };
@@ -58,6 +58,7 @@ const CartContaner = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
+        console.log(data, "vishal")
         setCheckList(data);
       })
       .catch((err) => console.log(err));
@@ -156,7 +157,7 @@ const CartContaner = () => {
       console.log(err);
     }
   }
-
+  console.log(checkList,">>>>>")
   return (
     <>
       <h1 className="text-xl sm:text-2xl w-full  text-center p-4 border-gray-700 border-y-2">
@@ -174,7 +175,7 @@ const CartContaner = () => {
         <div className="sm:flex   w-[100%] h-full">
           <div className="sm:w-[55%]  sm:p-10 m-2">
             {checkList.map((product, index) => {
-              return <Cartcard product={product} handleClick={handleClick} />;
+              return <Cartcard setTotal={setTotal}  product={product} handleClick={handleClick} />;
             })}
           </div>
           <div className="sm:w-[45%] align-middle p-10 m-1">
@@ -207,43 +208,7 @@ const CartContaner = () => {
           </div>
         </div>
       )}
-      {/* {loading ? (
-        <div className="flex justify-center items-center h-[95vh]">
-          <DNA />
-        </div>
-      ) : (
-        <div className="sm:flex   w-[100%] h-full">
-          <div className="sm:w-[55%]  sm:p-10 m-2">
-            {checkList.map((product, index) => {
-              return (
-                <Cartcard product={product} handleClick={handleClick} />
-              );
-            })}
-          </div>
-          <div className="sm:w-[45%] align-middle p-10 m-1" >
-          <div className=" sticky -top-1">
-            <h1 className="text-2xl mb-8 ">Order Summary</h1>
-            <p className="flex justify-between w-[80%] mb-3">
-              <span>SubTotal : </span> <span>{total} $</span>
-            </p>
-            <hr />
-            <p className="flex justify-between w-[80%] mb-3">
-              <span>Shipping Charge : </span> <span>99 $</span>
-            </p>
-            <hr />
-            <p className="flex justify-between w-[80%] mb-3">
-              <span>Tax Estimate: </span> <span>100 $</span>
-            </p>
-            <hr />
-            <h1 className="flex justify-between w-[80%] mb-3 text-xl text-gray-300">
-              <span>Order Total: </span> <span>{total + 199}$</span>
-            </h1>
-            <hr />
-            <button onClick={handleBuy} id="rzp-button1" className="w-[100%] bg-green-400 text-black from-stone-950 font-bold rounded-md p-1 mt-2">Buy Now</button>
-          </div>
-          </div>
-        </div>
-      )} */}
+
     </>
   );
 };
